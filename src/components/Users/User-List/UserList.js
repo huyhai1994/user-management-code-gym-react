@@ -4,21 +4,15 @@ import axios from "axios";
 import Loading from "../../Common/Loading/Loading";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import ConfirmDialog from "../../Common/ConfirmDialog/ConfirmDialog";
 
 function UserList() {
 
+
     const notify = (id) => {
-        toast.info("Are you sure?", {
-            position: toast.POSITION.TOP_CENTER, autoClose: false, closeOnClick: false, onClose: () => {
-                // Handle close
-            }, buttons: [{
-                label: 'Yes', onClick: () => {
-                    alert('Confirmed');
-                    handleDeleteUser(id)
-                }
-            }, {
-                label: 'No', onClick: () => alert('Cancelled')
-            }]
+        toast.info(<ConfirmDialog id={id} onConfirm={handleDeleteUser} onCancel={() => {
+        }}/>, {
+            autoClose: false, closeOnClick: true,
         });
     };
     const API_URL = 'https://669dd2f69a1bda3680047410.mockapi.io/users/';
@@ -30,19 +24,17 @@ function UserList() {
             setUsers(response.data);
             setIsLoading(false);
         })
-    })
+    }, [loadData])
 
     const handleDeleteUser = (id) => {
-        if (window.confirm("Are you sure you want to delete")) {
-            setIsLoading(true)
-            axios.delete(API_URL + id).then(res => {
-                setLoadData(!loadData)
-                setIsLoading(false);
-                toast.success("Delete success!", {
-                    autoClose: 1000,
-                })
+        setIsLoading(true)
+        axios.delete(API_URL + id).then(res => {
+            setLoadData(!loadData)
+            setIsLoading(false);
+            toast.success("Delete success!", {
+                autoClose: 1000,
             })
-        }
+        })
     }
 
     return (<div>
@@ -79,7 +71,10 @@ function UserList() {
                         <td>{user.name}</td>
                         <td>{user.email}</td>
                         <td>
-                            <button onClick={() => handleDeleteUser(user.id)} className="btn btn-danger">Delete
+                            <button onClick={() => {
+                                console.log(user.id);
+                                notify(user.id);
+                            }} className="btn btn-danger">Delete
                             </button>
                         </td>
                     </tr>))}
@@ -87,6 +82,7 @@ function UserList() {
                     </tbody>
 
                 </table>
+                <ToastContainer/>
             </div>
         </div>
     </div>)
