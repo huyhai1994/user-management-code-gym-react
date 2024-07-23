@@ -10,20 +10,19 @@ import UserEdit from "./components/Users/User-Edit/UserEdit";
 
 function App() {
     return (<>
-            <Routes>
-                <Route path={"/"} element={<Home/>}/>
-                <Route path={"/login"} element={<Login/>}/>
-                <Route path={"/register"} element={<Register/>}/>
+        <Routes>
+            <Route path={"/"} element={<Home/>}/>
+            <Route path={"/login"} element={<Login/>}/>
+            <Route path={"/register"} element={<Register/>}/>
+            <Route path={"/admin"} element={<Master/>}>
+                <Route path={"users"} element={<UserList/>}/>
+                <Route path={"users/create"} element={<UserAdd/>}/>
+                <Route path={"users/:id/edit"} element={<UserEdit/>}/>
+            </Route>
 
-                <Route path={"/admin"} element={<Master/>}>
-                    <Route path={"users"} element={<UserList/>}/>
-                    <Route path={"users/create"} element={<UserAdd/>}/>
-                    <Route path={"users/:id/edit"} element={<UserEdit/>}/>
-                </Route>
-
-                <Route path="*" element={<h1>Page not found</h1>}/>
-            </Routes>
-        </>);
+            <Route path="*" element={<h1>Page not found</h1>}/>
+        </Routes>
+    </>);
 }
 
 export default App;

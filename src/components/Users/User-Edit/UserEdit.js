@@ -2,6 +2,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
+import {useEffect, useState} from "react";
 
 const editSchema = Yup.object().shape({
     email: Yup.string()
@@ -14,13 +15,25 @@ const API_URL = 'https://669dd2f69a1bda3680047410.mockapi.io/users/';
 function UserEdit() {
     const navigate = useNavigate();
     const {id} = useParams();
+    /*TODO get the user info with id*/
+    const [loadData, setLoadData] = useState(false);
+    const [user, setUser] = useState([]);
+    useEffect(() => {
+        axios.get(`${API_URL}/${id}`)
+            .then(response => {
+                setUser(response.data);
+                console.log("User fetched successfully: ", response.data);
+            })
+            .catch(error => {
+                console.error('Error fetching user: ', error);
+            });
+    }, [loadData])
 
     const editForm = useFormik({
         initialValues: {
             name: '', email: '', password: '',
         }, validationSchema: editSchema, onSubmit: (values) => {
             axios.put(`${API_URL}/${id}`, values).then(response => {
-                console.log(values);
                 alert('User updated successfully');
                 editForm.resetForm();
                 navigate("/admin/users");
