@@ -10,5 +10,5 @@
          npm install bootstrap react-bootstrap
     4. axios:
         npm i axios
-
-        
+    5. Toast:
+        npm i react-toastify

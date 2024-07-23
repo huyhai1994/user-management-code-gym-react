@@ -1,25 +1,30 @@
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {toast} from "react-toastify";
 
 function UserList() {
+    const API_URL = 'https://669dd2f69a1bda3680047410.mockapi.io/users';
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [loadData, setIsLoadData] = useState(false);
+    const [loadData, setLoadData] = useState(false);
     useEffect(() => {
-        axios.get('https://669dd2f69a1bda3680047410.mockapi.io/api/users/').then(
-            response => {
-                setUsers(response.data);
-                setIsLoading(false);
-            }
-        )
+        axios.get(API_URL).then(response => {
+            setUsers(response.data);
+            setIsLoading(false);
+        })
     })
 
     const handleDeleteUser = (id) => {
-        // thuat toan xoa 1 phan tu trong mang theo dieu kien
         if (window.confirm("Are you sure you want to delete")) {
-            const newUsers = users.filter(user => user.id !== id)
-            setUserFilter(newUsers)
+            setIsLoading(true)
+            axios.delete(API_URL + id).then(res => {
+                setLoadData(!loadData)
+                setIsLoading(false);
+                toast.success("Delete success!", {
+                    autoClose: 1000,
+                })
+            })
         }
     }
 
@@ -40,9 +45,6 @@ function UserList() {
             <div className="card-header">
                 <div className="row">
                     <div className="col-12 col-md-6"> User List</div>
-                    <div className="col-12 col-md-6">
-                        <InputSearch search={handleSearch}/>
-                    </div>
                 </div>
             </div>
             <div className="card-body">
@@ -56,17 +58,22 @@ function UserList() {
                     </tr>
                     </thead>
                     <tbody>
-                    {userFilter.map((user, index) => (<tr key={user.id}>
-                        <th scope="row">{index + 1}</th>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td>
-                            <button onClick={() => handleDeleteUser(user.id)}
-                                    className="btn btn-danger">Delete
-                            </button>
-                        </td>
-                    </tr>))}
+                    {isLoading ? (<tr>
+                            <td colSpan="3">
+                                <Loading/>
+                            </td>
+                        </tr>) : users.map((user, index) => (<tr key={user.id}>
+                            <th scope="row">{index + 1}</th>
+                            <td>{user.name}</td>
+                            <td>{user.email}</td>
+                            <td>
+                                <button onClick={() => handleDeleteUser(user.id)} className="btn btn-danger">Delete
+                                </button>
+                            </td>
+                        </tr>))}
+
                     </tbody>
+
                 </table>
             </div>
         </div>
