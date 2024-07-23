@@ -1,10 +1,27 @@
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
-import {toast} from "react-toastify";
+import Loading from "../../Common/Loading/Loading";
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function UserList() {
-    const API_URL = 'https://669dd2f69a1bda3680047410.mockapi.io/users';
+
+    const notify = (id) => {
+        toast.info("Are you sure?", {
+            position: toast.POSITION.TOP_CENTER, autoClose: false, closeOnClick: false, onClose: () => {
+                // Handle close
+            }, buttons: [{
+                label: 'Yes', onClick: () => {
+                    alert('Confirmed');
+                    handleDeleteUser(id)
+                }
+            }, {
+                label: 'No', onClick: () => alert('Cancelled')
+            }]
+        });
+    };
+    const API_URL = 'https://669dd2f69a1bda3680047410.mockapi.io/users/';
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [loadData, setLoadData] = useState(false);
@@ -26,11 +43,6 @@ function UserList() {
                 })
             })
         }
-    }
-
-    const handleSearch = (keyword) => {
-        const newUsers = keyword ? users.filter(user => user.name.toLowerCase().includes(keyword)) : data
-        setUserFilter(newUsers)
     }
 
     return (<div>
@@ -59,18 +71,18 @@ function UserList() {
                     </thead>
                     <tbody>
                     {isLoading ? (<tr>
-                            <td colSpan="3">
-                                <Loading/>
-                            </td>
-                        </tr>) : users.map((user, index) => (<tr key={user.id}>
-                            <th scope="row">{index + 1}</th>
-                            <td>{user.name}</td>
-                            <td>{user.email}</td>
-                            <td>
-                                <button onClick={() => handleDeleteUser(user.id)} className="btn btn-danger">Delete
-                                </button>
-                            </td>
-                        </tr>))}
+                        <td colSpan="3">
+                            <Loading/>
+                        </td>
+                    </tr>) : users.map((user, index) => (<tr key={user.id}>
+                        <th scope="row">{index + 1}</th>
+                        <td>{user.name}</td>
+                        <td>{user.email}</td>
+                        <td>
+                            <button onClick={() => handleDeleteUser(user.id)} className="btn btn-danger">Delete
+                            </button>
+                        </td>
+                    </tr>))}
 
                     </tbody>
 
