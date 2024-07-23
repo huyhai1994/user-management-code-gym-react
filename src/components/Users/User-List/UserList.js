@@ -1,10 +1,14 @@
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import './UserList.css'
 import Loading from "../../Common/Loading/Loading";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmDialog from "../../Common/ConfirmDialog/ConfirmDialog";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 function UserList() {
     const API_URL = 'https://669dd2f69a1bda3680047410.mockapi.io/users/';
@@ -21,7 +25,9 @@ function UserList() {
     };
     useEffect(() => {
         axios.get(API_URL).then(response => {
-            setUsers(response.data);
+            /*TODO: sort user from newest by Id*/
+            const sortUsers = response.data.sort((a, b) => b.id - a.id);
+            setUsers(sortUsers);
             setIsLoading(false);
         })
     }, [loadData])
@@ -39,15 +45,22 @@ function UserList() {
     }
 
     return (<div>
-        <h1 className='text-center'>User List</h1>
-        <Link to={"/admin/users/create"}>
-            <button className={"btn btn-success"}>
-                User add
-            </button>
-        </Link>
+
+
         {/* List user here */}
-        <div className="container">
-            <table className="table table-responsive">
+        <div className="container user-list">
+            <h1 className='text-center'>User List</h1>
+            <div className="row">
+                <div className="col d-flex justify-content-end">
+                    <Link to={"/admin/users/create"}>
+                        <button className={"btn btn-success"}>
+                            <PersonAddIcon/>
+                        </button>
+                    </Link>
+                    <div/>
+                </div>
+            </div>
+            <table className="table table-responsive text-center">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -69,14 +82,14 @@ function UserList() {
                         <button onClick={() => {
                             console.log(user.id);
                             notify(user.id, user.name);
-                        }} className="btn w-25 btn-danger"
+                        }} className="btn btn-outline-danger mx-1"
                                 disabled={isNotificationActive}
-                        >Delete
+                        ><DeleteIcon/>
                         </button>
                         <button className="btn btn-outline-primary mx-1">
                             <Link to={`/admin/users/${user.id}/edit`}
                                   style={{color: 'inherit', textDecoration: 'inherit'}}>
-                                Edit
+                                <EditIcon/>
                             </Link>
                         </button>
                     </td>

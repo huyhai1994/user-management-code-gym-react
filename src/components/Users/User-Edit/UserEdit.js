@@ -3,6 +3,7 @@ import {useFormik} from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
 import {useEffect, useState} from "react";
+import Loading from "../../Common/Loading/Loading";
 
 const editSchema = Yup.object().shape({
     email: Yup.string()
@@ -41,7 +42,8 @@ function UserEdit() {
     }, [id]);
 
     if (!user) {
-        return <div>Loading...</div>;
+        return <div><Loading/>
+        </div>;
     }
 
     return (<div className='container mt-5 '>
@@ -57,7 +59,8 @@ function UserEdit() {
             </div>
             <div className="mb-3">
                 <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                <input type="email" value={editForm.values.email} name="email" onChange={editForm.handleChange}
+                <input type="email" value={editForm.values.email} name="email"
+                       onChange={editForm.handleChange}
                        className="form-control"
                        id="exampleInputEmail1"
                        placeholder="name@example.com"/>
