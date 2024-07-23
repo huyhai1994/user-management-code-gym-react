@@ -12,3 +12,7 @@
         npm i axios
     5. Toast:
         npm i react-toastify
+    6. font-awsome 
+        npm i --save @fortawesome/fontawesome-svg-core
+        npm install --save @fortawesome/free-solid-svg-icons
+        npm install --save @fortawesome/react-fontawesome

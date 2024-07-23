@@ -46,14 +46,14 @@ function UserList() {
             </button>
         </Link>
         {/* List user here */}
-        <div className="container-fluid">
+        <div className="container">
             <table className="table table-responsive">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
-                    <th></th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -65,13 +65,19 @@ function UserList() {
                     <th scope="row">{index + 1}</th>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
-                    <td>
+                    <td className='my-4'>
                         <button onClick={() => {
                             console.log(user.id);
                             notify(user.id, user.name);
-                        }} className="btn btn-danger"
+                        }} className="btn w-25 btn-danger"
                                 disabled={isNotificationActive}
                         >Delete
+                        </button>
+                        <button className="btn btn-outline-primary mx-1">
+                            <Link to={`/admin/users/${user.id}/edit`}
+                                  style={{color: 'inherit', textDecoration: 'inherit'}}>
+                                Edit
+                            </Link>
                         </button>
                     </td>
                 </tr>))}
