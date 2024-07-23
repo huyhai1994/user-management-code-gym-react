@@ -1,4 +1,33 @@
+import {useNavigate} from "react-router-dom";
+import {useFormik} from "formik";
+import * as Yup from 'yup';
+
+const registerSchema = Yup.object().shape({
+    email: Yup.string()
+        .required("Email is required"),
+    password: Yup.string().required("Password is required"),
+    name: Yup.string().required("Name is required")
+})
+
 function UserAdd() {
+    /*TODO: Khi dang ki nguoi dung moi thanh cong
+    *       thi trang se chuyen sang trang
+    *       danh sach users*/
+    const navigate = useNavigate();
+    const registerForm = useFormik({
+        initialValues: {
+            name: '', email: '', password: '',
+        }, validationSchema: registerSchema, onSubmit: (values) => {
+
+        }
+    })
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        /*TODO: Call API to add new user like login*/
+
+        navigate("/admin/users");
+    }
+
     return (
 
         <div className='container mt-5 '>
