@@ -16,6 +16,8 @@ function UserList() {
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [loadData, setLoadData] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const usersPerPage = 20;
     const notify = (id, name) => {
         setIsNotificationActive(true)
         toast.info(<ConfirmDialog id={id} name={name} onConfirm={handleDeleteUser} onCancel={() => {
@@ -43,6 +45,11 @@ function UserList() {
             })
         })
     }
+    /*TODO: indexing for sorting and paging*/
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+    const totalPages = Math.ceil(users.length / usersPerPage);
 
     return (<div>
 
@@ -75,7 +82,7 @@ function UserList() {
                         <Loading/>
                     </td>
                 </tr>) : users.map((user, index) => (<tr key={user.id}>
-                    <th scope="row">{index + 1}</th>
+                    <th scope="row">{indexOfFirstUser + index + 1} < /th>
                     <td>{user.name}</td>
                     <td>{user.email}</td>
                     <td className='my-4'>
@@ -96,6 +103,22 @@ function UserList() {
                 </tr>))}
                 </tbody>
             </table>
+            <div className="d-flex justify-content-center">
+                <button
+                    className="btn btn-primary mx-1"
+                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                    disabled={currentPage === 1}
+                >
+                    Previous
+                </button>
+                <button
+                    className="btn btn-primary mx-1"
+                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                    disabled={currentPage === totalPages}
+                >
+                    Next
+                </button>
+            </div>
             <ToastContainer/>
         </div>
     </div>)
