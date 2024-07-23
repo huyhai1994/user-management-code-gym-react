@@ -4,6 +4,7 @@ import * as Yup from 'yup';
 import axios from "axios";
 import {useEffect, useState} from "react";
 import Loading from "../../Common/Loading/Loading";
+import {toast} from "react-toastify";
 
 const editSchema = Yup.object().shape({
     email: Yup.string()
@@ -21,7 +22,7 @@ function UserEdit() {
             name: '', email: '',
         }, validationSchema: editSchema, onSubmit: (values) => {
             axios.put(`${API_URL}/${id}`, values).then(response => {
-                alert('User updated successfully');
+                toast.success('User updated successfully', {})
                 editForm.resetForm();
                 navigate("/admin/users");
             })

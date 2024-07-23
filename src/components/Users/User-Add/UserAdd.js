@@ -2,6 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
+import {toast} from "react-toastify";
 
 const registerSchema = Yup.object().shape({
     email: Yup.string()
@@ -22,7 +23,7 @@ function UserAdd() {
         }, validationSchema: registerSchema, onSubmit: (values) => {
             axios.post(API_URL, values).then(response => {
                 console.log(values);
-                alert('User registered successfully');
+                toast.success('User registered successfully', {})
                 registerForm.resetForm();
                 navigate("/admin/users");
             })
