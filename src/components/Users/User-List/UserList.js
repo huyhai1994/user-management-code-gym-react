@@ -5,6 +5,7 @@ import './UserList.css';
 import Loading from "../../Common/Loading/Loading";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import UserService from "../../Services/user.service";
 import ConfirmDialog from "../../Common/ConfirmDialog/ConfirmDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -30,7 +31,7 @@ function UserList() {
     };
 
     useEffect(() => {
-        axios.get(API_URL).then(response => {
+        UserService.getAllUsers().then(response => {
             const sortUsers = response.data.sort((a, b) => b.id - a.id);
             setUsers(sortUsers);
             setIsLoading(false);
@@ -40,7 +41,7 @@ function UserList() {
     const handleDeleteUser = (id) => {
         setIsLoading(true);
         setIsNotificationActive(true);
-        axios.delete(API_URL + id).then(res => {
+        UserService.deleteUser(id).then(res => {
             setLoadData(!loadData);
             setIsLoading(false);
             toast.success("Delete success!", {
@@ -52,7 +53,6 @@ function UserList() {
     const indexOfLastUser = currentPage * USERS_PER_PAGE;
     const indexOfFirstUser = indexOfLastUser - USERS_PER_PAGE;
     const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-
     const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
 
     return (<div>
