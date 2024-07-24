@@ -4,12 +4,13 @@ import * as Yup from 'yup';
 import {toast} from "react-toastify";
 import {Box, Button, Container, TextField, Typography} from "@mui/material";
 import UserService from "../../../services/user.service";
+import './User-Add.css'
 
 const registerSchema = Yup.object().shape({
-    email: Yup.string()
+    email: Yup.string().matches(/^[a-zA-Z0-9._%+-]{1,32}@[a-zA-Z0-9.-]{6,32}\.(com|vn|us)$/, "Invalid email address")
         .required("Email is required"),
     password: Yup.string().required("Password is required"),
-    name: Yup.string().required("Name is required")
+    name: Yup.string().matches(/^[a-zA-Z\s]+$/, "Name can only contain letter").required("Name is required")
 });
 
 function UserAdd() {
@@ -26,7 +27,7 @@ function UserAdd() {
         }
     });
 
-    return (<Container maxWidth="sm">
+    return (<Container maxWidth="sm" className="user-add">
         <Box mt={5}>
             <Typography variant="h4" component="h1" gutterBottom align="center">
                 Add new user
