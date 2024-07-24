@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {useState} from 'react';
 import './NavBar.css';
 import {useFormik} from "formik";
 import UserService from "../../services/user.service";
@@ -11,28 +10,23 @@ const NavBar = () => {
         initialValues: {
             searchQuery: '',
         }, onSubmit: (values) => {
-            try {
-                UserService.findUserByName(values.searchQuery).then(response => {
-                    if (response) {
-                        setUsers(response.data);
-                        console.log(response.data);
-                    } else {
-                        setUsers([]); // Clear the users state if no user is found
-                        toast.error('User not found');
-                    }
-                }).catch(error => {
-                    if (error.response && error.response.status === 404) {
-                        setUsers([]); // Clear the users state if no user is found
-                        toast.error('User not found');
-                    } else {
-                        console.error("Error fetching users: " + error);
-                        toast.error('An error occurred while fetching users');
-                    }
-                });
-            } catch (error) {
-                console.error("Error fetching users: " + error);
-                toast.error('An error occurred while fetching users');
-            }
+            UserService.findUserByName(values.searchQuery).then(response => {
+                if (response) {
+                    setUsers(response.data);
+                    toast.success(`User ${values.searchQuery} found`);
+                } else {
+                    setUsers([]); // Clear the users state if no user is found
+                    toast.error('User not found');
+                }
+            }).catch(error => {
+                if (error.response && error.response.status === 404) {
+                    setUsers([]); // Clear the users state if no user is found
+                    toast.error('User not found');
+                } else {
+                    toast.error('An error occurred while fetching users');
+                }
+            });
+
         },
     });
 
@@ -49,9 +43,6 @@ const NavBar = () => {
                     <ul className="navbar-nav me-auto mb-2 mb-lg-0">
                         <li className="nav-item">
                             <Link className="nav-link active" aria-current="page" to="/">Home</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/link">Link</Link>
                         </li>
                         {/*TODO: user management section start*/}
                         <li className="nav-item dropdown">
