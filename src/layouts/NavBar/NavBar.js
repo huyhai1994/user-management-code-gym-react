@@ -1,8 +1,41 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import './NavBar.css'
+import './NavBar.css';
+import {useFormik} from "formik";
+import UserService from "../../services/user.service";
+import {toast} from "react-toastify";
 
 const NavBar = () => {
+    const [users, setUsers] = useState([]);
+    const formik = useFormik({
+        initialValues: {
+            searchQuery: '',
+        }, onSubmit: (values) => {
+            try {
+                UserService.findUserByName(values.searchQuery).then(response => {
+                    if (response) {
+                        setUsers(response.data);
+                        console.log(response.data);
+                    } else {
+                        setUsers([]); // Clear the users state if no user is found
+                        toast.error('User not found');
+                    }
+                }).catch(error => {
+                    if (error.response && error.response.status === 404) {
+                        setUsers([]); // Clear the users state if no user is found
+                        toast.error('User not found');
+                    } else {
+                        console.error("Error fetching users: " + error);
+                        toast.error('An error occurred while fetching users');
+                    }
+                });
+            } catch (error) {
+                console.error("Error fetching users: " + error);
+                toast.error('An error occurred while fetching users');
+            }
+        },
+    });
+
     return (<>
         <nav className="navbar navbar-expand-lg navbar-light ">
             <div className="container-fluid">
@@ -17,8 +50,11 @@ const NavBar = () => {
                         <li className="nav-item">
                             <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/link">Link</Link>
+                        </li>
                         {/*TODO: user management section start*/}
-                        <li className="nav-item dropdown text-start">
+                        <li className="nav-item dropdown">
                             <Link className="nav-link dropdown-toggle btn btn-link" type="button"
                                   id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false"
                                   to={'/admin/users'}>
@@ -30,9 +66,13 @@ const NavBar = () => {
                             </ul>
                         </li>
                     </ul>
-                    <form className="d-flex" role="search">
+                    <form className="d-flex" role="search" onSubmit={formik.handleSubmit}>
                         <input className="form-control me-2" type="search" placeholder="Search"
-                               aria-label="Search"/>
+                               aria-label="Search"
+                               name="searchQuery"
+                               value={formik.values.searchQuery}
+                               onChange={formik.handleChange}
+                        />
                         <button className="btn btn-outline-success" type="submit">Search</button>
                     </form>
                 </div>

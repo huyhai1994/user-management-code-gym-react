@@ -3,7 +3,7 @@ import {useFormik} from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
 import {toast} from "react-toastify";
-import {Container, Box, TextField, Button, Typography} from "@mui/material";
+import {Box, Button, Container, TextField, Typography} from "@mui/material";
 
 const registerSchema = Yup.object().shape({
     email: Yup.string()
