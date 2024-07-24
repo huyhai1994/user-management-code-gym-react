@@ -1,9 +1,9 @@
 import {useNavigate} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
-import axios from "axios";
 import {toast} from "react-toastify";
 import {Box, Button, Container, TextField, Typography} from "@mui/material";
+import UserService from "../../../services/user.service";
 
 const registerSchema = Yup.object().shape({
     email: Yup.string()
@@ -11,7 +11,6 @@ const registerSchema = Yup.object().shape({
     password: Yup.string().required("Password is required"),
     name: Yup.string().required("Name is required")
 });
-const API_URL = 'https://669dd2f69a1bda3680047410.mockapi.io/users/';
 
 function UserAdd() {
     const navigate = useNavigate();
@@ -19,8 +18,7 @@ function UserAdd() {
         initialValues: {
             name: '', email: '', password: '',
         }, validationSchema: registerSchema, onSubmit: (values) => {
-            axios.post(API_URL, values).then(response => {
-                console.log(values);
+            UserService.createUser(values).then(response => {
                 toast.success('User registered successfully', {})
                 registerForm.resetForm();
                 navigate("/admin/users");

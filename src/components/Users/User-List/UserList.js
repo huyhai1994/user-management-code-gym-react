@@ -3,7 +3,7 @@ import {useEffect, useState} from "react";
 import Loading from "../../Common/Loading/Loading";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UserService from "../../../Services/user.service";
+import UserService from "../../../services/user.service";
 import ConfirmDialog from "../../Common/ConfirmDialog/ConfirmDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
