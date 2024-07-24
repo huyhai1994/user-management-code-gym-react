@@ -1,3 +1,8 @@
 .user-list {
     padding-top: 60px; /* Adjust based on the height of your nav bar */
 }
+
+/*TODO: add blur when loading*/
+.blur {
+    filter: blur(2px);
+}

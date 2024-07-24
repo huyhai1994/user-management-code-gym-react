@@ -3,6 +3,7 @@ import {useContext, useEffect, useState} from "react";
 import Loading from "../../Common/Loading/Loading";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import './UserList.css'
 import UserService from "../../../services/user.service";
 import {SearchContext} from "../../../context/SearchContext";
 import ConfirmDialog from "../../Common/ConfirmDialog/ConfirmDialog";
@@ -81,7 +82,8 @@ function UserList() {
     const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
 
     return (<Container sx={{mt: 2}}>
-        <TableContainer component={Paper}> <Typography variant="h4" align="center" gutterBottom>User List</Typography>
+        <TableContainer className='blur' component={Paper}> <Typography variant="h4" align="center" gutterBottom>User
+            List</Typography>
             <UserSearch/>
             <Table>
                 <TableHead align="center">
