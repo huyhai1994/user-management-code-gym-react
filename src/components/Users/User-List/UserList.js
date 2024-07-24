@@ -87,6 +87,7 @@ function UserList() {
             List</Typography>
             <UserSearch/>
             <Table>
+                {/*TODO: Table Head start*/}
                 <TableHead align="center">
                     <TableRow>
                         <TableCell>#</TableCell>
@@ -100,11 +101,11 @@ function UserList() {
                         <TableCell colSpan={4}>
                             <Loading/>
                         </TableCell>
-                    </TableRow>) : currentUsers.map((user, index) => (<TableRow key={user.id}>
+                    </TableRow>) : currentUsers.map((user, index) => (<TableRow className='table-row' key={user.id}>
                         <TableCell>{indexOfFirstUser + index + 1}</TableCell>
                         <TableCell>{user.name}</TableCell>
                         <TableCell>{user.email}</TableCell>
-                        <TableCell>
+                        <TableCell className='table-row-actions'>
                             <Tooltip title="Delete">
                                 {/*TODO: 23/07/2024 -> can xem lai mui de biet
                                         tai sao ko hien helper len duoc */}

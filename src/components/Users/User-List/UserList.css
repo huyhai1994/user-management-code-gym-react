@@ -6,3 +6,12 @@
 .blur {
     filter: blur(2px);
 }
+
+/* UserList.css */
+.table-row-actions {
+    visibility: hidden;
+}
+
+.table-row:hover .table-row-actions {
+    visibility: visible;
+}
