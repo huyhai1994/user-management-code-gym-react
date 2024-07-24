@@ -82,7 +82,8 @@ function UserList() {
     const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
 
     return (<Container sx={{mt: 2}}>
-        <TableContainer className='blur' component={Paper}> <Typography variant="h4" align="center" gutterBottom>User
+        <TableContainer className={isLoading && 'blur'} component={Paper}> <Typography variant="h4" align="center"
+                                                                                       gutterBottom>User
             List</Typography>
             <UserSearch/>
             <Table>
