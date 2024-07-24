@@ -1,39 +1,61 @@
 import {Link} from "react-router-dom";
+import {Container, Box, TextField, Button, Typography} from "@mui/material";
 import "./Register.css";
 
 function Register() {
-    return (
-        <>
-            <div className="container d-flex justify-content-center">
-                <div className="form-register text-center mt-5">
+    return (<Container maxWidth="sm">
+            <Box display="flex" justifyContent="center" mt={5}>
+                <Box textAlign="center" width="100%">
                     <form>
-                        <h1 className="h3 mb-3 fw-normal">Please register</h1>
-                        <div className="form-floating mb-1">
-                            <input type="text" className="form-control" id=""
-                                   placeholder="name"/>
-                            <label htmlFor="floatingInput">Name</label>
-                        </div>
-                        <div className="form-floating mb-1">
-                            <input type="email" className="form-control" id="floatingInput"
-                                   placeholder="name@example.com"/>
-                            <label htmlFor="floatingInput">Email address</label>
-                        </div>
-                        <div className="form-floating mb-1">
-                            <input type="password" className="form-control" id="floatingPassword"
-                                   placeholder="Password"/>
-                            <label htmlFor="floatingPassword">Password</label>
-                        </div>
-                        <button className="w-100 btn btn-lg btn-primary" type="submit">Register</button>
-                        <Link to={"/login"}>
-                            <small>Login</small>
-                        </Link>
-                        <p className="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
+                        <Typography variant="h3" component="h1" gutterBottom>
+                            Please register
+                        </Typography>
+                        <Box mb={2}>
+                            <TextField
+                                fullWidth
+                                label="Name"
+                                variant="outlined"
+                                placeholder="name"
+                            />
+                        </Box>
+                        <Box mb={2}>
+                            <TextField
+                                fullWidth
+                                type="email"
+                                label="Email address"
+                                variant="outlined"
+                                placeholder="name@example.com"
+                            />
+                        </Box>
+                        <Box mb={2}>
+                            <TextField
+                                fullWidth
+                                type="password"
+                                label="Password"
+                                variant="outlined"
+                                placeholder="Password"
+                            />
+                        </Box>
+                        <Button
+                            fullWidth
+                            variant="contained"
+                            color="primary"
+                            type="submit"
+                        >
+                            Register
+                        </Button>
+                        <Box mt={2}>
+                            <Link to="/login">
+                                <Typography variant="body2">Login</Typography>
+                            </Link>
+                        </Box>
+                        <Typography variant="body2" color="textSecondary" mt={5}>
+                            &copy; 2017–2021
+                        </Typography>
                     </form>
-                </div>
-            </div>
-
-        </>
-    )
+                </Box>
+            </Box>
+        </Container>);
 }
 
 export default Register;

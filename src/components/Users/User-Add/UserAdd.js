@@ -13,9 +13,6 @@ const registerSchema = Yup.object().shape({
 const API_URL = 'https://669dd2f69a1bda3680047410.mockapi.io/users/';
 
 function UserAdd() {
-    /*TODO: Khi dang ki nguoi dung moi thanh cong
-    *       thi trang se chuyen sang trang
-    *       danh sach users*/
     const navigate = useNavigate();
     const registerForm = useFormik({
         initialValues: {
