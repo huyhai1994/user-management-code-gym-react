@@ -22,6 +22,7 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    Tooltip,
     Typography
 } from '@mui/material';
 import UserSearch from "../../Common/Search/UserSearch";
@@ -101,23 +102,29 @@ function UserList() {
                         <TableCell>{user.name}</TableCell>
                         <TableCell>{user.email}</TableCell>
                         <TableCell>
-                            <IconButton
-                                color="error"
-                                onClick={() => {
-                                    console.log(user.id);
-                                    notify(user.id, user.name);
-                                }}
-                                disabled={isNotificationActive}
-                            >
-                                <DeleteIcon/>
-                            </IconButton>
-                            <IconButton
-                                color="primary"
-                                component={Link}
-                                to={`/admin/users/${user.id}/edit`}
-                            >
-                                <EditIcon/>
-                            </IconButton>
+                            <Tooltip title="Delete">
+                                {/*TODO: 23/07/2024 -> can xem lai mui de biet
+                                        tai sao ko hien helper len duoc */}
+                                <IconButton
+                                    color="error"
+                                    onClick={() => {
+                                        console.log(user.id);
+                                        notify(user.id, user.name);
+                                    }}
+                                    disabled={isNotificationActive}
+                                >
+                                    <DeleteIcon/>
+                                </IconButton>
+                            </Tooltip>
+                            <Tooltip title="Edit">
+                                <IconButton
+                                    color="primary"
+                                    component={Link}
+                                    to={`/admin/users/${user.id}/edit`}
+                                >
+                                    <EditIcon/>
+                                </IconButton>
+                            </Tooltip>
                         </TableCell>
                     </TableRow>))}
                 </TableBody>

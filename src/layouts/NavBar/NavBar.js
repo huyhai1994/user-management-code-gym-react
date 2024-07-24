@@ -7,7 +7,7 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {Link} from "react-router-dom";
-
+/*TODO: setting the page*/
 const pages = [{name: 'User Add', path: '/admin/users/create'}, {name: 'User List', path: '/admin/users'}];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
