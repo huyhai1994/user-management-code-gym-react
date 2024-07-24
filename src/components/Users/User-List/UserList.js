@@ -78,7 +78,7 @@ function UserList() {
     const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
     const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
 
-    return (<Container>
+    return (<Container sx={{mt: 2}}>
         <TableContainer component={Paper}> <Typography variant="h4" align="center" gutterBottom>User List</Typography>
             <Table>
                 <TableHead align="center">
