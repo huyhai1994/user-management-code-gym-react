@@ -1,10 +1,10 @@
 import {useNavigate, useParams} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
-import axios from "axios";
 import {useEffect, useState} from "react";
 import Loading from "../../Common/Loading/Loading";
 import {toast} from "react-toastify";
+import UserService from "../../../services/user.service";
 
 const editSchema = Yup.object().shape({
     email: Yup.string()
@@ -21,7 +21,7 @@ function UserEdit() {
         initialValues: {
             name: '', email: '',
         }, validationSchema: editSchema, onSubmit: (values) => {
-            axios.put(`${API_URL}/${id}`, values).then(response => {
+            UserService.updateUser(id, values).then(response => {
                 toast.success('User updated successfully', {})
                 editForm.resetForm();
                 navigate("/admin/users");
@@ -30,7 +30,7 @@ function UserEdit() {
     });
 
     useEffect(() => {
-        axios.get(`${API_URL}/${id}`)
+        UserService.getUserById(id)
             .then(response => {
                 setUser(response.data);
                 editForm.setValues({

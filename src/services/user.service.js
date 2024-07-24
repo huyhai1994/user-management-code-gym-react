@@ -23,6 +23,10 @@ class UserService {
         return await axios.put(API_URL + '/' + id, user);
     }
 
+    static async findUserByName(name) {
+        return await axios.get(API_URL + '?name=' + name);
+    }
+
 
 }
 
