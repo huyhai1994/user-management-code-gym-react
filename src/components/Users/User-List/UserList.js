@@ -7,7 +7,6 @@ import UserService from "../../../services/user.service";
 import ConfirmDialog from "../../Common/ConfirmDialog/ConfirmDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import {
@@ -70,24 +69,13 @@ function UserList() {
 
     return (<Container>
         <Typography variant="h4" align="center" gutterBottom>User List</Typography>
-        <Box display="flex" justifyContent="flex-end" mb={3}>
-            <Button
-                variant="contained"
-                color="success"
-                startIcon={<PersonAddIcon/>}
-                component={Link}
-                to="/admin/users/create"
-            >
-                Add User
-            </Button>
-        </Box>
         <TableContainer component={Card}>
             <Table>
                 <TableHead>
                     <TableRow>
-                        <TableCell>#</TableCell>
-                        <TableCell>Name</TableCell>
-                        <TableCell>Email</TableCell>
+                        <TableCell align='center'>#</TableCell>
+                        <TableCell align='center'>Name</TableCell>
+                        <TableCell align='center'>Email</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
                 </TableHead>
@@ -96,30 +84,32 @@ function UserList() {
                         <TableCell colSpan={4}>
                             <Loading/>
                         </TableCell>
-                    </TableRow>) : currentUsers.map((user, index) => (<TableRow key={user.id}>
-                        <TableCell>{indexOfFirstUser + index + 1}</TableCell>
-                        <TableCell>{user.name}</TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell>
-                            <IconButton
-                                color="error"
-                                onClick={() => {
-                                    console.log(user.id);
-                                    notify(user.id, user.name);
-                                }}
-                                disabled={isNotificationActive}
-                            >
-                                <DeleteIcon/>
-                            </IconButton>
-                            <IconButton
-                                color="primary"
-                                component={Link}
-                                to={`/admin/users/${user.id}/edit`}
-                            >
-                                <EditIcon/>
-                            </IconButton>
-                        </TableCell>
-                    </TableRow>))}
+                    </TableRow>) : currentUsers.map((user, index) => (<TableRow key={user.id}
+                    <TableCell>{indexOfFirstUser + index + 1}</TableCell>
+                    <TableCell>{user.name}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>
+                        {/*TODO: delete icon*/}
+                        <IconButton
+                            color="error"
+                            onClick={() => {
+                                console.log(user.id);
+                                notify(user.id, user.name);
+                            }}
+                            disabled={isNotificationActive}
+                        >
+                            <DeleteIcon/>
+                        </IconButton>
+                        {/*TODO: edit icon*/}
+                        <IconButton
+                            color="primary"
+                            component={Link}
+                            to={`/admin/users/${user.id}/edit`}
+                        >
+                            <EditIcon/>
+                        </IconButton>
+                    </TableCell>
+                        </TableRow>))}
                 </TableBody>
             </Table>
         </TableContainer>

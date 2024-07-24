@@ -17,11 +17,8 @@ const NavBar = () => {
                         <li className="nav-item">
                             <Link className="nav-link active" aria-current="page" to="/">Home</Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/link">Link</Link>
-                        </li>
                         {/*TODO: user management section start*/}
-                        <li className="nav-item dropdown">
+                        <li className="nav-item dropdown text-start">
                             <Link className="nav-link dropdown-toggle btn btn-link" type="button"
                                   id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false"
                                   to={'/admin/users'}>
