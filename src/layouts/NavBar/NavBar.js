@@ -1,7 +1,4 @@
-import {useFormik} from "formik";
-import {toast} from "react-toastify";
-import {SearchContext} from "../../context/SearchContext";
-import React, {useContext} from "react";
+import React from "react";
 import {AppBar, Box, Container, IconButton, Menu, Toolbar, Typography} from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import Avatar from '@mui/material/Avatar';
@@ -32,17 +29,6 @@ const NavBar = () => {
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
     };
-
-    const {setSearchQuery} = useContext(SearchContext);
-    const formik = useFormik({
-        initialValues: {
-            searchQuery: '',
-        }, onSubmit: (values) => {
-            setSearchQuery(values.searchQuery);
-            toast.success(`Searching for ${values.searchQuery}`);
-            formik.resetForm();
-        },
-    });
 
     return (<>
         <AppBar position="static">

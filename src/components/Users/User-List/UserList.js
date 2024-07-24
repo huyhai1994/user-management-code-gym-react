@@ -24,6 +24,7 @@ import {
     TableRow,
     Typography
 } from '@mui/material';
+import UserSearch from "../../Common/Search/UserSearch";
 
 function UserList() {
     const {searchQuery} = useContext(SearchContext);
@@ -80,6 +81,7 @@ function UserList() {
 
     return (<Container sx={{mt: 2}}>
         <TableContainer component={Paper}> <Typography variant="h4" align="center" gutterBottom>User List</Typography>
+            <UserSearch/>
             <Table>
                 <TableHead align="center">
                     <TableRow>
