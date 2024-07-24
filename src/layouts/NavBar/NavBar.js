@@ -1,33 +1,19 @@
-import {useState} from 'react';
 import './NavBar.css';
 import {useFormik} from "formik";
-import UserService from "../../services/user.service";
 import {toast} from "react-toastify";
 import {Link} from "react-router-dom";
+import {SearchContext} from "../../context/SearchContext";
+import {useContext} from "react";
 
 const NavBar = () => {
-    const [users, setUsers] = useState([]);
+    const {setSearchQuery} = useContext(SearchContext);
     const formik = useFormik({
         initialValues: {
             searchQuery: '',
-        }, onSubmit: (values) => {
-            UserService.findUserByName(values.searchQuery).then(response => {
-                if (response) {
-                    setUsers(response.data);
-                    toast.success(`User ${values.searchQuery} found`);
-                } else {
-                    setUsers([]); // Clear the users state if no user is found
-                    toast.error('User not found');
-                }
-            }).catch(error => {
-                if (error.response && error.response.status === 404) {
-                    setUsers([]); // Clear the users state if no user is found
-                    toast.error('User not found');
-                } else {
-                    toast.error('An error occurred while fetching users');
-                }
-            });
-
+        },
+        onSubmit: (values) => {
+            setSearchQuery(values.searchQuery);
+            toast.success(`Searching for ${values.searchQuery}`);
         },
     });
 

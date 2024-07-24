@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Loading from "../../Common/Loading/Loading";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -23,8 +23,10 @@ import {
     TableRow,
     Typography
 } from '@mui/material';
+import {SearchContext} from "../../../context/SearchContext";
 
 function UserList() {
+    const {searchQuery} = useContext(SearchContext);
     const [isNotificationActive, setIsNotificationActive] = useState(false);
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -41,12 +43,23 @@ function UserList() {
     };
 
     useEffect(() => {
-        UserService.getAllUsers().then(response => {
-            const sortUsers = response.data.sort((a, b) => b.id - a.id);
-            setUsers(sortUsers);
-            setIsLoading(false);
-        });
-    }, [loadData]);
+        if (searchQuery) {
+            UserService.findUserByName(searchQuery).then(response => {
+                setUsers(response.data);
+                setIsLoading(false);
+            }).catch(error => {
+                setUsers([]);
+                setIsLoading(false);
+                toast.error('User not found');
+            });
+        } else {
+            UserService.getAllUsers().then(response => {
+                const sortUsers = response.data.sort((a, b) => b.id - a.id);
+                setUsers(sortUsers);
+                setIsLoading(false);
+            });
+        }
+    }, [loadData, searchQuery]);
 
     const handleDeleteUser = (id) => {
         setIsLoading(true);
