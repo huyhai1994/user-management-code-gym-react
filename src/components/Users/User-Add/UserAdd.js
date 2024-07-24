@@ -3,13 +3,14 @@ import {useFormik} from "formik";
 import * as Yup from 'yup';
 import axios from "axios";
 import {toast} from "react-toastify";
+import {Container, Box, TextField, Button, Typography} from "@mui/material";
 
 const registerSchema = Yup.object().shape({
     email: Yup.string()
         .required("Email is required"),
     password: Yup.string().required("Password is required"),
     name: Yup.string().required("Name is required")
-})
+});
 const API_URL = 'https://669dd2f69a1bda3680047410.mockapi.io/users/';
 
 function UserAdd() {
@@ -25,38 +26,60 @@ function UserAdd() {
                 navigate("/admin/users");
             })
         }
-    })
+    });
 
-    return (<div className='container mt-5 '>
-        <h1 className='text-center'>Add new user</h1>
-        {/*TODO: Form login start here...*/}
-        <form className='border p-3 rounded-3' onSubmit={registerForm.handleSubmit}>
-            <div className="mb-3">
-                <label htmlFor="exampleInputEmail1" className="form-label">Name</label>
-                <input type="text" name="name" onChange={registerForm.handleChange} className="form-control"
-                       id="exampleInputName"
-                />
-                {registerForm.errors.name && (<small className="text-danger">{registerForm.errors.name}</small>)}
-            </div>
-            {/*TODO: email input start*/}
-            <div className="mb-3">
-                <label htmlFor="exampleInputEmail1" className="form-label">Email address</label>
-                <input type="email" name="email" onChange={registerForm.handleChange} className="form-control"
-                       id="exampleInputEmail1"
-                       placeholder="name@example.com"/>
-                {registerForm.errors.email && (<small className="text-danger">{registerForm.errors.email}</small>)}
-            </div>
-            {/*TODO: password input*/}
-            <div className="mb-3">
-                <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-                <input type="password" name="password" className="form-control" id="exampleInputPassword1"
-                       onChange={registerForm.handleChange}/>
-                {registerForm.errors.password && (
-                    <small className="text-danger">{registerForm.errors.password}</small>)}
-            </div>
-            <button type="submit" className="btn btn-primary w-100">Submit</button>
-        </form>
-    </div>)
+    return (<Container maxWidth="sm">
+        <Box mt={5}>
+            <Typography variant="h4" component="h1" gutterBottom align="center">
+                Add new user
+            </Typography>
+            <form onSubmit={registerForm.handleSubmit}>
+                <Box mb={3}>
+                    <TextField
+                        fullWidth
+                        label="Name"
+                        name="name"
+                        variant="outlined"
+                        onChange={registerForm.handleChange}
+                        error={Boolean(registerForm.errors.name)}
+                        helperText={registerForm.errors.name}
+                    />
+                </Box>
+                <Box mb={3}>
+                    <TextField
+                        fullWidth
+                        label="Email address"
+                        name="email"
+                        type="email"
+                        variant="outlined"
+                        onChange={registerForm.handleChange}
+                        error={Boolean(registerForm.errors.email)}
+                        helperText={registerForm.errors.email}
+                    />
+                </Box>
+                <Box mb={3}>
+                    <TextField
+                        fullWidth
+                        label="Password"
+                        name="password"
+                        type="password"
+                        variant="outlined"
+                        onChange={registerForm.handleChange}
+                        error={Boolean(registerForm.errors.password)}
+                        helperText={registerForm.errors.password}
+                    />
+                </Box>
+                <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                >
+                    Submit
+                </Button>
+            </form>
+        </Box>
+    </Container>);
 }
 
 export default UserAdd;
