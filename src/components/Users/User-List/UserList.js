@@ -1,17 +1,30 @@
 import {Link} from "react-router-dom";
 import {useEffect, useState} from "react";
-import axios from "axios";
-import './UserList.css';
 import Loading from "../../Common/Loading/Loading";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UserService from "../../Services/user.service";
+import UserService from "../../../services/user.service";
 import ConfirmDialog from "../../Common/ConfirmDialog/ConfirmDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import {
+    Container,
+    Typography,
+    Button,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper,
+    IconButton,
+    Box,
+    Card
+} from '@mui/material';
 
 function UserList() {
     const API_URL = 'https://669dd2f69a1bda3680047410.mockapi.io/users/';
@@ -55,75 +68,82 @@ function UserList() {
     const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
     const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
 
-    return (<div>
-        <div className="container user-list">
-            <h1 className='text-center'>User List</h1>
-            <div className="row mb-3">
-                <div className="col d-flex justify-content-end">
-                    <Link to={"/admin/users/create"}>
-                        <button className={"btn btn-success"}>
-                            <PersonAddIcon/>
-                        </button>
-                    </Link>
-                </div>
-            </div>
-            <div className="table-responsive">
-                <table className="table text-center">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {isLoading ? (<tr>
-                        <td colSpan="4">
+    return (<Container>
+        <Typography variant="h4" align="center" gutterBottom>User List</Typography>
+        <Box display="flex" justifyContent="flex-end" mb={3}>
+            <Button
+                variant="contained"
+                color="success"
+                startIcon={<PersonAddIcon/>}
+                component={Link}
+                to="/admin/users/create"
+            >
+                Add User
+            </Button>
+        </Box>
+        <TableContainer component={Card}>
+            <Table>
+                <TableHead>
+                    <TableRow>
+                        <TableCell>#</TableCell>
+                        <TableCell>Name</TableCell>
+                        <TableCell>Email</TableCell>
+                        <TableCell>Action</TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {isLoading ? (<TableRow>
+                        <TableCell colSpan={4}>
                             <Loading/>
-                        </td>
-                    </tr>) : currentUsers.map((user, index) => (<tr key={user.id}>
-                        <th scope="row">{indexOfFirstUser + index + 1}</th>
-                        <td>{user.name}</td>
-                        <td>{user.email}</td>
-                        <td className='my-4'>
-                            <button onClick={() => {
-                                console.log(user.id);
-                                notify(user.id, user.name);
-                            }} className="btn btn-outline-danger mx-1"
-                                    disabled={isNotificationActive}
-                            ><DeleteIcon/>
-                            </button>
-                            <button className="btn btn-outline-primary mx-1">
-                                <Link to={`/admin/users/${user.id}/edit`}
-                                      style={{color: 'inherit', textDecoration: 'inherit'}}>
-                                    <EditIcon/>
-                                </Link>
-                            </button>
-                        </td>
-                    </tr>))}
-                    </tbody>
-                </table>
-            </div>
-            <div className="d-flex justify-content-center">
-                <button
-                    className="btn btn-primary mx-1"
-                    onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                    disabled={currentPage === 1}
-                >
-                    <NavigateBeforeIcon/>
-                </button>
-                <button
-                    className="btn btn-primary mx-1"
-                    onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                    disabled={currentPage === totalPages}
-                >
-                    <NavigateNextIcon/>
-                </button>
-            </div>
-            <ToastContainer/>
-        </div>
-    </div>);
+                        </TableCell>
+                    </TableRow>) : currentUsers.map((user, index) => (<TableRow key={user.id}>
+                        <TableCell>{indexOfFirstUser + index + 1}</TableCell>
+                        <TableCell>{user.name}</TableCell>
+                        <TableCell>{user.email}</TableCell>
+                        <TableCell>
+                            <IconButton
+                                color="error"
+                                onClick={() => {
+                                    console.log(user.id);
+                                    notify(user.id, user.name);
+                                }}
+                                disabled={isNotificationActive}
+                            >
+                                <DeleteIcon/>
+                            </IconButton>
+                            <IconButton
+                                color="primary"
+                                component={Link}
+                                to={`/admin/users/${user.id}/edit`}
+                            >
+                                <EditIcon/>
+                            </IconButton>
+                        </TableCell>
+                    </TableRow>))}
+                </TableBody>
+            </Table>
+        </TableContainer>
+        <Box display="flex" justifyContent="center" mt={3}>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                startIcon={<NavigateBeforeIcon/>}
+                sx={{mr: 2}} // Add margin-right to the first button
+            >
+            </Button>
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                disabled={currentPage === totalPages}
+                endIcon={<NavigateNextIcon/>}
+            >
+            </Button>
+        </Box>
+        <ToastContainer/>
+    </Container>);
 }
 
 export default UserList;

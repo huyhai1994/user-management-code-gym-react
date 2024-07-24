@@ -20,23 +20,17 @@ const NavBar = () => {
                         <li className="nav-item">
                             <Link className="nav-link" to="/link">Link</Link>
                         </li>
+                        {/*TODO: user management section start*/}
                         <li className="nav-item dropdown">
-                            <button className="nav-link dropdown-toggle btn btn-link" type="button"
-                                    id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                Dropdown
-                            </button>
+                            <Link className="nav-link dropdown-toggle btn btn-link" type="button"
+                                  id="navbarDropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                                  to={'/admin/users'}>
+                                User Management
+                            </Link>
                             <ul className="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><Link className="dropdown-item" to="/action">Action</Link></li>
-                                <li><Link className="dropdown-item" to="/another-action">Another action</Link></li>
-                                <li>
-                                    <hr className="dropdown-divider"/>
-                                </li>
-                                <li><Link className="dropdown-item" to="/something-else">Something else here</Link>
-                                </li>
+                                <li><Link className="dropdown-item" to="/admin/users/create">User Add</Link></li>
+                                <li><Link className="dropdown-item" to="/admin/users">User List</Link></li>
                             </ul>
-                        </li>
-                        <li className="nav-item">
-                            <span className="nav-link disabled" aria-disabled="true">Disabled</span>
                         </li>
                     </ul>
                     <form className="d-flex" role="search">

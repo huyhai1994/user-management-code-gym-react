@@ -1,10 +1,14 @@
 import axios from "axios";
-import {API_URL} from "../../config/backend.config";
+import {API_URL} from "../config/backend.config";
 
 class UserService {
 
     static async getAllUsers() {
         return await axios.get(API_URL);
+    }
+
+    static async deleteUser(id) {
+        return await axios.delete(API_URL + id);
     }
 
     static async getUserById(id) {
@@ -19,9 +23,7 @@ class UserService {
         return await axios.put(API_URL + '/' + id, user);
     }
 
-    static async deleteUser(id) {
-        return await axios.delete(API_URL + id);
-    }
+
 }
 
 export default UserService;

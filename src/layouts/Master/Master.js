@@ -1,6 +1,6 @@
 import {Outlet} from "react-router-dom";
 import './Master.css'
-import NavBar from "../../components/NavBar/NavBar";
+import NavBar from "../NavBar/NavBar";
 
 function Master() {
     return (<>
