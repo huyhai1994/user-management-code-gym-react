@@ -1,5 +1,5 @@
 import axios from "axios";
-import {API_URL} from "../../config/backend.config";
+import {API_URL} from "../config/backend.config";
 
 class UserService {
 
