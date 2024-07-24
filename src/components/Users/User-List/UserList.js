@@ -4,6 +4,7 @@ import Loading from "../../Common/Loading/Loading";
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import UserService from "../../../services/user.service";
+import {SearchContext} from "../../../context/SearchContext";
 import ConfirmDialog from "../../Common/ConfirmDialog/ConfirmDialog";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -23,7 +24,6 @@ import {
     TableRow,
     Typography
 } from '@mui/material';
-import {SearchContext} from "../../../context/SearchContext";
 
 function UserList() {
     const {searchQuery} = useContext(SearchContext);

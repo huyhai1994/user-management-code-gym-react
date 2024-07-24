@@ -10,10 +10,10 @@ const NavBar = () => {
     const formik = useFormik({
         initialValues: {
             searchQuery: '',
-        },
-        onSubmit: (values) => {
+        }, onSubmit: (values) => {
             setSearchQuery(values.searchQuery);
             toast.success(`Searching for ${values.searchQuery}`);
+            formik.resetForm();
         },
     });
 
