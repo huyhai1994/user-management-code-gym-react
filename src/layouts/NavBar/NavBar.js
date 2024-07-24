@@ -3,6 +3,7 @@ import './NavBar.css';
 import {useFormik} from "formik";
 import UserService from "../../services/user.service";
 import {toast} from "react-toastify";
+import {Link} from "react-router-dom";
 
 const NavBar = () => {
     const [users, setUsers] = useState([]);

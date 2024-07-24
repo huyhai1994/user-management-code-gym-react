@@ -7,21 +7,24 @@ import Master from "./layouts/Master/Master";
 import UserList from "./components/Users/User-List/UserList";
 import UserAdd from "./components/Users/User-Add/UserAdd";
 import UserEdit from "./components/Users/User-Edit/UserEdit";
+import {SearchProvider} from "./context/SearchContext";
 
 function App() {
     return (<>
-        <Routes>
-            <Route path={"/"} element={<Home/>}/>
-            <Route path={"/login"} element={<Login/>}/>
-            <Route path={"/register"} element={<Register/>}/>
-            <Route path={"/admin"} element={<Master/>}>
-                <Route path={"users"} element={<UserList/>}/>
-                <Route path={"users/create"} element={<UserAdd/>}/>
-                <Route path={"users/:id/edit"} element={<UserEdit/>}/>
-            </Route>
+        <SearchProvider>
+            <Routes>
+                <Route path={"/"} element={<Home/>}/>
+                <Route path={"/login"} element={<Login/>}/>
+                <Route path={"/register"} element={<Register/>}/>
+                <Route path={"/admin"} element={<Master/>}>
+                    <Route path={"users"} element={<UserList/>}/>
+                    <Route path={"users/create"} element={<UserAdd/>}/>
+                    <Route path={"users/:id/edit"} element={<UserEdit/>}/>
+                </Route>
+                <Route path="*" element={<h1>Page not found</h1>}/>
+            </Routes>
+        </SearchProvider>
 
-            <Route path="*" element={<h1>Page not found</h1>}/>
-        </Routes>
     </>);
 }
 
