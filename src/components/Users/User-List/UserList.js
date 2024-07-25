@@ -1,21 +1,21 @@
-import {Link} from "react-router-dom";
 import {useContext, useEffect, useState} from "react";
 import Loading from "../../Common/Loading/Loading";
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './UserList.css'
 import UserService from "../../../services/user.service";
 import {SearchContext} from "../../../context/SearchContext";
 import ConfirmDialog from "../../Common/ConfirmDialog/ConfirmDialog";
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import {
     Box,
     Button,
     Container,
     IconButton,
+    Link,
     Paper,
     Table,
     TableBody,
@@ -23,10 +23,10 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Tooltip,
     Typography
 } from '@mui/material';
 import UserSearch from "../../Common/Search/UserSearch";
+import Tooltip from "@mui/material/Tooltip";
 
 function UserList() {
     const {searchQuery} = useContext(SearchContext);
@@ -93,6 +93,8 @@ function UserList() {
                         <TableCell>#</TableCell>
                         <TableCell>Name</TableCell>
                         <TableCell>Email</TableCell>
+                        <TableCell>Date of Birth</TableCell>
+                        <TableCell>Status</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
                 </TableHead>
@@ -101,36 +103,39 @@ function UserList() {
                         <TableCell colSpan={4}>
                             <Loading/>
                         </TableCell>
-                    </TableRow>) : currentUsers.map((user, index) => (<TableRow className='table-row' key={user.id}>
-                        <TableCell>{indexOfFirstUser + index + 1}</TableCell>
-                        <TableCell>{user.name}</TableCell>
-                        <TableCell>{user.email}</TableCell>
-                        <TableCell className='table-row-actions'>
-                            <Tooltip title="Delete">
-                                {/*TODO: 23/07/2024 -> can xem lai mui de biet
+                    </TableRow>) : currentUsers.map((user, index) => (
+                        <TableRow className={`table-row ${user.active ? " " : "inactive-row"}`} key={user.id}>
+                            <TableCell>{indexOfFirstUser + index + 1}</TableCell>
+                            <TableCell>{user.name}</TableCell>
+                            <TableCell>{user.email}</TableCell>
+                            <TableCell>{user.dob}</TableCell>
+                            <TableCell>{user.active ? "active" : "non-active"}</TableCell>
+                            <TableCell className=' table-row-actions'>
+                                <Tooltip title="Delete">
+                                    {/*TODO: 23/07/2024 -> can xem lai mui de biet
                                         tai sao ko hien helper len duoc */}
-                                <IconButton
-                                    color="error"
-                                    onClick={() => {
-                                        console.log(user.id);
-                                        notify(user.id, user.name);
-                                    }}
-                                    disabled={isNotificationActive}
-                                >
-                                    <DeleteIcon/>
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Edit">
-                                <IconButton
-                                    color="primary"
-                                    component={Link}
-                                    to={`/admin/users/${user.id}/edit`}
-                                >
-                                    <EditIcon/>
-                                </IconButton>
-                            </Tooltip>
-                        </TableCell>
-                    </TableRow>))}
+                                    <IconButton
+                                        color="error"
+                                        onClick={() => {
+                                            console.log(user.id);
+                                            notify(user.id, user.name);
+                                        }}
+                                        disabled={isNotificationActive}
+                                    >
+                                        <DeleteIcon/>
+                                    </IconButton>
+                                </Tooltip>
+                                <Tooltip title="Edit">
+                                    <IconButton
+                                        color="primary"
+                                        component={Link}
+                                        to={`/admin/users/${user.id}/edit`}
+                                    >
+                                        <EditIcon/>
+                                    </IconButton>
+                                </Tooltip>
+                            </TableCell>
+                        </TableRow>))}
                 </TableBody>
             </Table>
         </TableContainer>
