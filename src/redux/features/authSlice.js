@@ -8,6 +8,10 @@ export const authSlice = createSlice({
             //TODO: cap nhat lai state
             state.userLogin = action.payload;
             state.isAuthenticated = true;
+        },
+        logout: (state) => {
+            state.userLogin = {};
+            state.isAuthenticated = false;
         }
     }
 })
