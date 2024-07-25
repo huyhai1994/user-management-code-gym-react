@@ -2,6 +2,8 @@ import "./Login.css";
 import {Link, useNavigate} from "react-router-dom";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
+import {useDispatch} from "react-redux";
+import {setUserLogin} from "../../redux/features/authSlice";
 
 /**
  * Validation schema for the login form using Yup.
@@ -21,7 +23,7 @@ const loginSchema = Yup.object().shape({
  */
 function Login(props) {
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     const loginForm = useFormik({
         initialValues: {
             email: "", password: "", rememberMe: false,
@@ -29,6 +31,10 @@ function Login(props) {
             const {email, password} = values;
             // Handle login logic
             if (email === "admin@gmail.com" && password === "1234") {
+                let user = {
+                    email: email, password: password
+                }
+                dispatch(setUserLogin(user));
                 // Navigate to the admin users page
                 navigate("/admin/users");
             } else {
