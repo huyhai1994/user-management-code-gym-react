@@ -15,7 +15,7 @@ const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 const NavBar = () => {
     const auth = useSelector(state => state.auth);
 
-    if (auth.isAuthenticated) {
+    if (auth.isAuthenticated && !pages.some(page => page.name.includes(auth.userLogin.email))) {
         pages.push({name: `Hello ${auth.userLogin.email}`, path: '#'});
     }
 
