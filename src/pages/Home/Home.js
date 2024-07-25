@@ -46,10 +46,12 @@ function Home() {
                 </p>
                 <p className="h5"> we have something for everyone.</p>
                 <div>
-                    <Button variant="primary" as={Link} to="/login" className="me-2" style={{width: '150px'}}>
+                    <Button as={Link} to="/login" className="me-2 btn btn-primary"
+                            style={{width: '150px'}}>
                         Login
                     </Button>
-                    <Button className="" variant="secondary" as={Link} to="/register" style={{width: "150px"}}>
+                    <Button className="btn btn-secondary" as={Link} to="/register"
+                            style={{width: "150px"}}>
                         Register
                     </Button>
                 </div>
