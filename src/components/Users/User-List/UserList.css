@@ -15,3 +15,8 @@
 .table-row:hover .table-row-actions {
     visibility: visible;
 }
+
+.inactive-row {
+    background-color: #fbdcdc; /* Light red background for inactive users */
+    filter: blur(2px)
+}
