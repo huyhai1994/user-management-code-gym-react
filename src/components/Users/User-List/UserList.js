@@ -6,6 +6,7 @@ import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './UserList.css'
+import Loading from "../../Common/Loading/Loading";
 import UserService from "../../../services/user.service";
 import {SearchContext} from "../../../context/SearchContext";
 import ConfirmDialog from "../../Common/ConfirmDialog/ConfirmDialog";
@@ -13,9 +14,11 @@ import {
     Box,
     Button,
     Container,
+    FormControlLabel,
     IconButton,
     Link,
     Paper,
+    Switch,
     Table,
     TableBody,
     TableCell,
@@ -35,6 +38,10 @@ function UserList() {
     const [loadData, setLoadData] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const USERS_PER_PAGE = 10;
+    const indexOfLastUser = currentPage * USERS_PER_PAGE;
+    const indexOfFirstUser = indexOfLastUser - USERS_PER_PAGE;
+    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+    const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
 
     const notify = (id, name) => {
         setIsNotificationActive(true);
@@ -75,12 +82,24 @@ function UserList() {
         });
     };
 
-    const indexOfLastUser = currentPage * USERS_PER_PAGE;
-    const indexOfFirstUser = indexOfLastUser - USERS_PER_PAGE;
-    const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
-    const totalPages = Math.ceil(users.length / USERS_PER_PAGE);
+    const handleUserStatusChange = (user, event) => {
+        user.active = event.target.checked;
+        UserService.updateUser(user.id, user).then(res => {
+            setLoadData(!loadData);
+            toast.success("Update status success!", {
+                autoClose: 1000,
+            });
+        });
+
+    }
+
 
     return (<Container sx={{mt: 2}}>
+        {isLoading && (
+            <div className="loading-overlay">
+                <Loading/>
+            </div>
+        )}
         <TableContainer className={isLoading && 'blur'} component={Paper}> <Typography variant="h4" align="center"
                                                                                        gutterBottom>User
             List</Typography>
@@ -93,7 +112,6 @@ function UserList() {
                         <TableCell>Name</TableCell>
                         <TableCell>Email</TableCell>
                         <TableCell>Date of Birth</TableCell>
-                        <TableCell>Status</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
                 </TableHead>
@@ -104,7 +122,10 @@ function UserList() {
                             <TableCell>{user.name}</TableCell>
                             <TableCell>{user.email}</TableCell>
                             <TableCell>{user.dob}</TableCell>
-                            <TableCell>{user.active ? "active" : "non-active"}</TableCell>
+                            <TableCell><FormControlLabel
+                                control={<Switch checked={user.active}
+                                                 onChange={(e) => handleUserStatusChange(user, e)}/>}
+                                label={user.active ? "Active" : "Disable"}/></TableCell>
                             <TableCell className=' table-row-actions'>
                                 <Tooltip title="Delete">
                                     {/*TODO: 23/07/2024 -> can xem lai mui de biet
