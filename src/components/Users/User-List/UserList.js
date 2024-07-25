@@ -93,7 +93,6 @@ function UserList() {
                 autoClose: 1000,
             });
         });
-
     }
 
     return (<Container sx={{mt: 2}}>

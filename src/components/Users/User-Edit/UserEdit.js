@@ -9,8 +9,8 @@ import {Box, Button, Container, TextField, Typography} from "@mui/material";
 
 const editSchema = Yup.object().shape({
     email: Yup.string()
-        .required("Email is required"),
-    name: Yup.string().required("Name is required")
+        .required("Email is required"), name: Yup.string()
+        .required("Name is required")
 });
 
 function UserEdit() {
@@ -20,16 +20,13 @@ function UserEdit() {
 
     const editForm = useFormik({
         initialValues: {
-            name: '',
-            email: '',
-        },
-        validationSchema: editSchema,
-        onSubmit: (values) => {
+            name: '', email: '', dob: '', active: '', avatar: ''
+        }, validationSchema: editSchema, onSubmit: (values) => {
             UserService.updateUser(id, values).then(response => {
-                toast.success('User updated successfully', {})
+                toast.success('User updated successfully', {});
                 editForm.resetForm();
                 navigate("/admin/users");
-            })
+            });
         }
     });
 
@@ -40,6 +37,9 @@ function UserEdit() {
                 editForm.setValues({
                     name: response.data.name,
                     email: response.data.email,
+                    dob: response.data.dob,
+                    active: response.data.active,
+                    avatar: response.data.avatar
                 });
             })
             .catch(error => {
@@ -51,50 +51,73 @@ function UserEdit() {
         return <div><Loading/></div>;
     }
 
-    return (
-        <Container maxWidth="sm" className="user-edit">
-            <Box mt={5}>
-                <Typography variant="h4" component="h1" gutterBottom align="center">
-                    Edit user
-                </Typography>
-                <form onSubmit={editForm.handleSubmit}>
-                    <Box mb={3}>
-                        <TextField
-                            fullWidth
-                            label="Name"
-                            name="name"
-                            variant="outlined"
-                            value={editForm.values.name}
-                            onChange={editForm.handleChange}
-                            error={Boolean(editForm.errors.name)}
-                            helperText={editForm.errors.name}
-                        />
-                    </Box>
-                    <Box mb={3}>
-                        <TextField
-                            fullWidth
-                            label="Email address"
-                            name="email"
-                            type="email"
-                            variant="outlined"
-                            value={editForm.values.email}
-                            onChange={editForm.handleChange}
-                            error={Boolean(editForm.errors.email)}
-                            helperText={editForm.errors.email}
-                        />
-                    </Box>
-                    <Button
+    return (<Container maxWidth="sm" className="user-edit" sx={{marginTop: '10%'}}>
+        <Box mt={5}>
+            <Typography variant="h4" component="h1" gutterBottom align="center">
+                Edit user
+            </Typography>
+            <form onSubmit={editForm.handleSubmit}>
+                <Box mb={3}>
+                    <TextField
                         fullWidth
-                        variant="contained"
-                        color="primary"
-                        type="submit"
-                    >
-                        Submit
-                    </Button>
-                </form>
-            </Box>
-        </Container>
-    );
+                        label="Name"
+                        name="name"
+                        variant="outlined"
+                        value={editForm.values.name}
+                        onChange={editForm.handleChange}
+                        error={Boolean(editForm.errors.name)}
+                        helperText={editForm.errors.name}
+                    />
+                </Box>
+                <Box mb={3}>
+                    <TextField
+                        fullWidth
+                        label="Email address"
+                        name="email"
+                        type="email"
+                        variant="outlined"
+                        value={editForm.values.email}
+                        onChange={editForm.handleChange}
+                        error={Boolean(editForm.errors.email)}
+                        helperText={editForm.errors.email}
+                    />
+                </Box>
+                <Box mb={3}>
+                    <TextField
+                        fullWidth
+                        label="Birth Day"
+                        name="dob"
+                        type="date"
+                        variant="outlined"
+                        value={editForm.values.dob}
+                        onChange={editForm.handleChange}
+                        error={Boolean(editForm.errors.dob)}
+                        helperText={editForm.errors.dob}
+                    />
+                </Box>
+                <Box mb={3}>
+                    <input
+                        accept="image/*"
+                        id="avatar"
+                        name="avatar"
+                        type="file"
+                        onChange={(event) => {
+                            editForm.setFieldValue("avatar", event.currentTarget.files[0]);
+                        }}
+                    />
+                    {editForm.errors.avatar && <div>{editForm.errors.avatar}</div>}
+                </Box>
+                <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                >
+                    Submit
+                </Button>
+            </form>
+        </Box>
+    </Container>);
 }
 
 export default UserEdit;
