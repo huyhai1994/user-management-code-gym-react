@@ -34,6 +34,7 @@ function Login(props) {
                 let user = {
                     email: email, password: password
                 }
+                /*TODO: goi dispatch*/
                 dispatch(setUserLogin(user));
                 // Navigate to the admin users page
                 navigate("/admin/users");

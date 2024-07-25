@@ -7,11 +7,18 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 /*TODO: setting the page*/
 const pages = [{name: 'User Add', path: '/admin/users/create'}, {name: 'User List', path: '/admin/users'}];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const NavBar = () => {
+    const auth = useSelector(state => state.auth);
+
+    if (auth.isAuthenticated) {
+        pages.push({name: `Hello ${auth.userLogin.email}`, path: '#'});
+    }
+
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -88,6 +95,13 @@ const NavBar = () => {
                                     </Link>
                                 </Typography>
                             </MenuItem>))}
+                            <MenuItem>
+                                <Typography textAlign="center">
+                                    <Link to="/logout" style={{textDecoration: 'none', color: 'inherit'}}>
+                                        Logout
+                                    </Link>
+                                </Typography>
+                            </MenuItem>
                         </Menu>
                     </Box>
                     <AdbIcon sx={{display: {xs: 'flex', md: 'none'}, mr: 1}}/>
@@ -107,7 +121,6 @@ const NavBar = () => {
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
                     </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (<Button
