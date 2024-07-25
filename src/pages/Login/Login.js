@@ -4,6 +4,7 @@ import {useFormik} from "formik";
 import * as Yup from 'yup';
 import {useDispatch} from "react-redux";
 import {setUserLogin} from "../../redux/features/authSlice";
+import {Box, Button, Checkbox, Container, FormControlLabel, TextField, Typography} from '@mui/material';
 
 /**
  * Validation schema for the login form using Yup.
@@ -45,54 +46,61 @@ function Login(props) {
         }
     });
 
-    return (<>
-        <div className="container d-flex justify-content-center">
-            <div className="form-signin text-center mt-5">
-                <form onSubmit={loginForm.handleSubmit}>
-                    <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
-                    <div className="form-floating">
-                        <input
-                            type="email"
-                            name="email"
-                            onChange={loginForm.handleChange}
-                            className="form-control"
-                            id="floatingInput"
-                            placeholder="name@example.com"
-                        />
-                        <label htmlFor="floatingInput">Email address</label>
-                        {loginForm.errors.email ? (
-                            <small className="text-danger">{loginForm.errors.email}</small>) : null}
-                    </div>
-                    <div className="form-floating">
-                        <input
-                            type="password"
-                            name="password"
-                            onChange={loginForm.handleChange}
-                            className="form-control"
-                            id="floatingPassword"
-                            placeholder="Password"
-                        />
-                        <label htmlFor="floatingPassword">Password</label>
-                    </div>
-                    <div className="checkbox mb-3">
-                        <label>
-                            <input
-                                type="checkbox"
-                                name="rememberMe"
-                                onChange={loginForm.handleChange}
-                                value="remember-me"
-                            /> Remember me
-                        </label>
-                    </div>
-                    <button className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-                    <Link to="/register">
-                        <small>Register</small>
-                    </Link>
-                    <p className="mt-5 mb-3 text-muted">&copy; 2017–2021</p>
-                </form>
-            </div>
-        </div>
-    </>);
+    return (<Container maxWidth="sm">
+        <Box className="form-signin" textAlign="center" mt={5}>
+            <form onSubmit={loginForm.handleSubmit}>
+                <Typography variant="h3" component="h1" gutterBottom>
+                    Please sign in
+                </Typography>
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    type="email"
+                    name="email"
+                    onChange={loginForm.handleChange}
+                    label="Email address"
+                    variant="outlined"
+                    error={!!loginForm.errors.email}
+                    helperText={loginForm.errors.email}
+                />
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    type="password"
+                    name="password"
+                    onChange={loginForm.handleChange}
+                    label="Password"
+                    variant="outlined"
+                    error={!!loginForm.errors.password}
+                    helperText={loginForm.errors.password}
+                />
+                <FormControlLabel
+                    control={<Checkbox
+                        name="rememberMe"
+                        onChange={loginForm.handleChange}
+                        color="primary"
+                    />}
+                    label="Remember me"
+                />
+                <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    type="submit"
+                >
+                    Sign in
+                </Button>
+                <Link to="/register">
+                    <Typography variant="body2">
+                        Register
+                    </Typography>
+                </Link>
+                <Typography variant="body2" color="textSecondary" mt={5}>
+                    &copy; 2017–2021
+                </Typography>
+            </form>
+        </Box>
+    </Container>);
 }
 
 export default Login;

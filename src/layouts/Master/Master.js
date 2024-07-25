@@ -12,7 +12,7 @@ function Master() {
         if (!auth.isAuthenticated) {
             navigate("/login")
         }
-    }, [auth])
+    }, [auth, navigate])
 
     return (<>
         <NavBar/>
