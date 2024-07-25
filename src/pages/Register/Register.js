@@ -1,5 +1,5 @@
 import {Link} from "react-router-dom";
-import {Container, Box, TextField, Button, Typography} from "@mui/material";
+import {Box, Button, Container, TextField, Typography} from "@mui/material";
 import "./Register.css";
 
 function Register() {

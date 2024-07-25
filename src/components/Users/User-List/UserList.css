@@ -32,3 +32,11 @@
     align-items: center;
     z-index: 1000; /* Ensure it appears above other elements */
 }
+
+/*TODO: avatar image*/
+.user-list__avatar-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
