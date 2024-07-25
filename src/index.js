@@ -6,9 +6,10 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {DevSupport} from "@react-buddy/ide-toolbox";
 import {ComponentPreviews, useInitial} from "./dev";
+import {Provider} from "react-redux";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+root.render(<Provider store={store}>
     <BrowserRouter>
         <DevSupport ComponentPreviews={ComponentPreviews}
                     useInitialHook={useInitial}
@@ -16,7 +17,7 @@ root.render(
             <App/>
         </DevSupport>
     </BrowserRouter>
-);
+</Provider>);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
