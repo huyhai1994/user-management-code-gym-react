@@ -1,5 +1,4 @@
 import {useContext, useEffect, useState} from "react";
-import Loading from "../../Common/Loading/Loading";
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
@@ -99,11 +98,7 @@ function UserList() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {isLoading ? (<TableRow>
-                        <TableCell colSpan={4}>
-                            <Loading/>
-                        </TableCell>
-                    </TableRow>) : currentUsers.map((user, index) => (
+                    {currentUsers.map((user, index) => (
                         <TableRow className={`table-row ${user.active ? " " : "inactive-row"}`} key={user.id}>
                             <TableCell>{indexOfFirstUser + index + 1}</TableCell>
                             <TableCell>{user.name}</TableCell>
