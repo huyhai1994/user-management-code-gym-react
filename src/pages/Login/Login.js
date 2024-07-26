@@ -60,7 +60,7 @@ function Login(props) {
         />
         <Box className="form-signin" textAlign="center" mt={5}>
             <form onSubmit={loginForm.handleSubmit}>
-                <Typography variant="h3" component="h1" gutterBottom>
+                <Typography variant="h3" component="h1" gutterBottom className='text-white fw-bold'>
                     Please sign in
                 </Typography>
                 <TextField
