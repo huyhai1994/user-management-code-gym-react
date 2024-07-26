@@ -4,4 +4,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    opacity: 0.9;
+    border-radius: 20px;
+    background: linear-gradient(to bottom, #ed9f1c, white);
 }
+

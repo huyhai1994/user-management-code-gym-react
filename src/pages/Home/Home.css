@@ -39,6 +39,24 @@
     font-weight: bolder;
 }
 
+.register-button {
+    background-color: #f1d29b;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.login-button {
+    background-color: #f5ab25;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
 @keyframes rotate {
     from {
         transform: translateY(-50%) rotate(0deg);

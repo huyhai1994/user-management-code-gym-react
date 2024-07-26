@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import {useDispatch} from "react-redux";
 import {setUserLogin} from "../../redux/features/authSlice";
 import {Box, Button, Checkbox, Container, FormControlLabel, TextField, Typography} from '@mui/material';
+import BackGroundImage from "../../assests/HomeImage.jpg";
 
 /**
  * Validation schema for the login form using Yup.
@@ -46,7 +47,17 @@ function Login(props) {
         }
     });
 
-    return (<Container maxWidth="sm">
+    return (<Container maxWidth="sm" style={{
+        position: 'relative', height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+    }}>
+        < img
+            src={BackGroundImage}
+            alt="Back Ground Image"
+            className="position-absolute"
+            style={{
+                left: '50%', top: '50%', objectFit: 'cover', transform: 'translate(-50%, -50%)', zIndex: '-1'
+            }}
+        />
         <Box className="form-signin" textAlign="center" mt={5}>
             <form onSubmit={loginForm.handleSubmit}>
                 <Typography variant="h3" component="h1" gutterBottom>
